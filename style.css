@@ -31,12 +31,16 @@ body {
   padding: 10px;
   color: #000;
   border-radius: 10px;
-  
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
   /* margin-top: -50px; */
 }
 
 .summery {
   padding: 25px;
+  color: rgb(128, 125, 125);
+  text-align: left;
+  
 }
 .img {
   padding-top: 30px;
