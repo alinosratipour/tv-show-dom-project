@@ -1,9 +1,27 @@
 //You can edit ALL of the code here
 function setup() {
   const allEpisodes = getAllEpisodes();
+
   makePageForEpisodes(allEpisodes);
 }
 
+// function test(movieList) {
+//   const header = document.createElement("div");
+//   let searchBar = document.createElement("input");
+//   const searchInfo = document.createElement("p");
+
+//   header.className = "header";
+//   searchBar.className = "searchBar";
+
+//   rootElem.appendChild(header);
+//   header.appendChild(searchBar);
+//   header.appendChild(searchInfo);
+
+//   movieList.filter((i) => {
+
+// return console.log(i.name === "Winter is Coming");
+//   });
+// }
 const filteredMovies = getAllEpisodes();
 const rootElem = document.getElementById("root");
 const header = document.createElement("div");
@@ -16,43 +34,32 @@ rootElem.appendChild(header);
 header.className = "header";
 searchBar.className = "searchBar";
 
-
-
-// searchBar.addEventListener("keyup", (e) => {
-//   const result = e.target.value;
-//   const filtered = filteredMovies.filter((movie) => {
-//   return movie.name.includes(result) || movie.summary.includes(result);
-   
-//   });
-//   console.log(filtered);
-
-//   return filtered;
-// });
-
-
-
-// function ali(){
-//   const res = searchBar.value;
- 
-//  const output = filteredMovies.filter((movie) => {
-//    return movie.name.includes(res) || movie.summary.includes(res);
-//  });
- 
- 
-
- 
-//}
-
-
-
-
-
-
-//searchBar.addEventListener('keyup', ali);
+function ali() {
+  searchBar.addEventListener("keyup", (e) => {
+    const result = e.target.value;
+    const filtered = filteredMovies.filter((movie) => {
+      return movie.name.includes(result) || movie.summary.includes(result);
+    });
+    //console.log(filtered);
+    //makePageForEpisodes(filtered)
+    return filtered;
+  });
+}
 
 function makePageForEpisodes(episodeList) {
+  //const grid = document.createElement("div");
+  //const header = document.createElement("div");
+  // let searchBar = document.createElement("input");
+  // const searchInfo = document.createElement("p");
 
-if(!searchBar.value){
+  //grid.className = "box";
+  // header.className = "header";
+  // searchBar.className = "searchBar";
+
+  // rootElem.appendChild(header);
+  // header.appendChild(searchBar);
+  // header.appendChild(searchInfo);
+
   episodeList.map((item) => {
     // create element
     const card = document.createElement("div");
@@ -77,18 +84,8 @@ if(!searchBar.value){
     h3.innerHTML = `  ${item.name} - S0${item.season}E0${item.number} `;
     img.src = `${item.image.medium}`;
     movieInfo.innerHTML = `${item.summary}`;
-
-    //return item;
+    return item;
   });
 }
-
-
-
-}
-     //return showAllMovies;
-   
-  
-
- 
 
 window.onload = setup;
