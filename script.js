@@ -25,19 +25,18 @@ const searchBar = document.querySelector(".searchBar");
 const header = document.querySelector(".header");
 const allEpisodes = getAllEpisodes();
 
+// Search event handler
+searchBar.addEventListener("keyup", (e) => {
+  let result = e.target.value.toLowerCase();
 
-  searchBar.addEventListener("keyup", (e) => {
-    let result = e.target.value.toLowerCase();
-
-    const filtered = allEpisodes.filter((movie) => {
-      return movie.name.toLowerCase().includes(result) || movie.summary.toLowerCase().includes(result);
- 
-    });
-   
-    makePageForEpisodes(filtered)
-  
+  const filtered = allEpisodes.filter((movie) => {
+    return (
+      movie.name.toLowerCase().includes(result) ||
+      movie.summary.toLowerCase().includes(result)
+    );
   });
-
-
+  //load the filtered records
+  makePageForEpisodes(filtered);
+});
 
 window.onload = setup;
