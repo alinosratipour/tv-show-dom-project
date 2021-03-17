@@ -33,16 +33,14 @@ border: 2px solid rgb(233, 233, 1);
   color: #000;
   border-radius: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
   /* margin-top: -50px; */
 }
 
-.summary {
-  padding: 15px;
+.summery {
+  padding: 25px;
   color: rgb(128, 125, 125);
   text-align: left;
- 
- 
 }
 .img {
   padding-top: 30px;
@@ -59,7 +57,7 @@ border: 2px solid rgb(233, 233, 1);
 }
 
 .header {
-  background-color: rgb(37, 3, 54);
+  background-color: darkorchid;
   padding-top: 80px;
   display: flex;
   align-items: center;
@@ -72,5 +70,4 @@ border: 2px solid rgb(233, 233, 1);
   padding: 10px;
   width: 40%;
   outline: none;
-  border-radius: 10px;
 }
