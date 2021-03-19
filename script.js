@@ -54,28 +54,51 @@ searchBar.addEventListener("keyup", (e) => {
   makePageForEpisodes(filtered);
 });
 
-//populate select menu
+// load all episodes when default dropDown option selected
+function loadMovies() {
+  let html = "";
+  allEpisodes.map((item) => {
+    html += ` 
+          <div class="movieCard">
+              <h3 class="movieTitle">${item.name} - S0${item.season}E0${item.number}</h3>
+              <img class="img" src= ${item.image.medium} />
+              <div class="summary">${item.summary}</div>
+          </div>           
+    `;
+  });
+  rootElem.innerHTML = html;
+  info.innerText = `\u00A0\ \u00A0\ Displaying ${allEpisodes.length}  `;
+}
+
+//populate select menu dropDown
 function loadMenu() {
   let menu = "";
+  let selectDefault = "";
 
+  selectDefault += `<option selected="selected">SelectAll</option>`;
   allEpisodes.map((item) => {
     menu += `   
    <option value=${item.id}>S0${item.season}E0${item.number} -${item.name} </option>
    `;
   });
 
-  dropDown.innerHTML = menu;
+  dropDown.innerHTML = selectDefault + menu;
 }
 
 loadMenu();
 
 dropDown.addEventListener("change", () => {
   let result = dropDown.options[dropDown.selectedIndex].value;
+  let ali = dropDown.options[dropDown.selectedIndex].text;
+
   const filtered = allEpisodes.filter((movie) => {
     return movie.id == result;
   });
 
   makePageForEpisodes(filtered);
+  if (ali == "SelectAll") {
+    loadMovies();
+  }
 });
 
 window.onload = setup;

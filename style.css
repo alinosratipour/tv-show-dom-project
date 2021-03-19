@@ -5,14 +5,14 @@
 }
 
 body {
-  background-color: rgb(17, 1, 26);
+  background-color: rgb(215, 179, 236);
 }
 .box {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
   padding-top: 20px;
-border: 2px solid rgb(233, 233, 1);
+
 }
 
 .movieCard {
@@ -121,4 +121,21 @@ text-align: right;
 
 .dropDown option{
   background-color: #fff;
+}
+
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+ background-color: rgb(37, 3, 54);
+  color: white;
+  text-align: center;
+  padding: 20px 0 20px 0;
+}
+.footer a{
+  text-decoration: none;
+  color: red;
 }
