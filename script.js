@@ -10,13 +10,11 @@ const allEpisodes = getAllEpisodes();
 const info = document.querySelector(".info");
 const info2 = document.querySelector(".info2");
 const dropDown = document.querySelector("#movie");
-
+const rootElem = document.getElementById("root");
 
 function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-   
   let html = "";
-  // let menu = "";
+  let menu = "";
   episodeList.map((item) => {
     html += ` 
           <div class="movieCard">
@@ -26,20 +24,22 @@ function makePageForEpisodes(episodeList) {
           </div>           
     `;
 
-  //  menu += `
+    menu += `
    
-  //  <option value=${item.id}>S0${item.season}E0${item.number} -${item.name} </option>
+       <div class="movieCard">
+              <h3 class="movieTitle">${item.name} - S0${item.season}E0${item.number}</h3>
+              <img class="img" src= ${item.image.medium} />
+              <div class="summary">${item.summary}</div>
+          </div> 
    
-  //  `;
-
+     `;
   });
 
   rootElem.innerHTML = html;
   info.innerText = `\u00A0\ \u00A0\ Displaying ${episodeList.length}  `;
- // dropDown.innerHTML = menu;
+ 
 }
 info2.innerText = `\u00A0\of \u00A0\ ${allEpisodes.length} episodes`;
-
 
 // Search event handler
 searchBar.addEventListener("keyup", (e) => {
@@ -53,39 +53,36 @@ searchBar.addEventListener("keyup", (e) => {
   });
   //load the filtered records
   makePageForEpisodes(filtered);
-
 });
 
 
-function loadMenu(){
+
+//populate select menu
+function loadMenu() {
   let menu = "";
-  allEpisodes.map(item => {
-   menu += `
+  
+  allEpisodes.map((item) => {
+    
+    menu += `
+    
    <option value=${item.id}>S0${item.season}E0${item.number} -${item.name} </option>
    `;
-
   });
- dropDown.innerHTML = menu;
+  dropDown.innerHTML = menu;
 }
 
 loadMenu();
 
-dropDown.addEventListener("change", (e) =>{
-let result = e.target.value;
-const ali = allEpisodes.find(movie =>{
-  //return console.log(movie.id);
+dropDown.addEventListener("change", () => {
+ 
+  let result = dropDown.options[dropDown.selectedIndex].value;
+  const filtered = allEpisodes.filter((movie) => {
+    return movie.id == result;
+  });
 
-  // if(movie.id === result){
-  //    return  console.log(movie.name);
-  // }
-return movie.id === result;
+  makePageForEpisodes(filtered);
 });
-loadMenu(ali);
 
-
-})
-
-
-
+//result = dropDown.options[dropDown.selectedIndex].text
 
 window.onload = setup;

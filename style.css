@@ -92,14 +92,32 @@ text-align: right;
 }
 .info{
   font-size: 1rem;
-  color: white;
+   color: rgb(152, 156, 160);
 
  
 }
 .info2{
   font-size: 1rem;
-  color: white;
+  color: rgb(152, 156, 160);
  
 }
 
+.movie{
+  padding: 8px 12px;
+  color: #333333;
+  background-color: #eeeeee;
+  border:  1px solid #dddddd;
+ cursor: pointer;
+ border-radius: 5px;
 
+}
+
+.movie:focus,
+.movie:hover{
+  outline:none;
+  border:  1px solid #bbbbbb;
+}
+
+.movie option{
+  background-color: #fff;
+}
