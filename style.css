@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: rgb(236, 230, 230);
+  background-color: rgb(17, 1, 26);
 }
 .box {
   display: grid;
@@ -64,6 +64,7 @@ border: 2px solid rgb(233, 233, 1);
   align-items: center;
   justify-content: center;
   padding-bottom: 20px;
+  border-bottom: 2px solid white;
   
 }
 
@@ -85,7 +86,7 @@ flex: 2;
 
 }
 
-.dropDown{
+.dropDownContainer{
   
 flex: 1;
 text-align: right;
@@ -102,7 +103,7 @@ text-align: right;
  
 }
 
-.movie{
+.dropDown{
   padding: 8px 12px;
   color: #333333;
   background-color: #eeeeee;
@@ -112,12 +113,12 @@ text-align: right;
 
 }
 
-.movie:focus,
-.movie:hover{
+.dropDown:focus,
+.dropDown:hover{
   outline:none;
   border:  1px solid #bbbbbb;
 }
 
-.movie option{
+.dropDown option{
   background-color: #fff;
 }

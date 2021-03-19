@@ -37,7 +37,6 @@ function makePageForEpisodes(episodeList) {
 
   rootElem.innerHTML = html;
   info.innerText = `\u00A0\ \u00A0\ Displaying ${episodeList.length}  `;
- 
 }
 info2.innerText = `\u00A0\of \u00A0\ ${allEpisodes.length} episodes`;
 
@@ -55,26 +54,22 @@ searchBar.addEventListener("keyup", (e) => {
   makePageForEpisodes(filtered);
 });
 
-
-
 //populate select menu
 function loadMenu() {
   let menu = "";
-  
+
   allEpisodes.map((item) => {
-    
-    menu += `
-    
+    menu += `   
    <option value=${item.id}>S0${item.season}E0${item.number} -${item.name} </option>
    `;
   });
+
   dropDown.innerHTML = menu;
 }
 
 loadMenu();
 
 dropDown.addEventListener("change", () => {
- 
   let result = dropDown.options[dropDown.selectedIndex].value;
   const filtered = allEpisodes.filter((movie) => {
     return movie.id == result;
@@ -82,7 +77,5 @@ dropDown.addEventListener("change", () => {
 
   makePageForEpisodes(filtered);
 });
-
-//result = dropDown.options[dropDown.selectedIndex].text
 
 window.onload = setup;
