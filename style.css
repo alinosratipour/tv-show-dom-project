@@ -12,7 +12,6 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
   padding-top: 20px;
-
 }
 
 .movieCard {
@@ -33,15 +32,12 @@ body {
   border-radius: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 0.9rem;
-
 }
 
 .summary {
   padding: 15px;
   color: rgb(128, 125, 125);
   text-align: left;
- 
- 
 }
 .img {
   padding-top: 30px;
@@ -54,7 +50,6 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
   padding-top: 20px;
-
 }
 
 .header {
@@ -65,77 +60,74 @@ body {
   justify-content: center;
   padding-bottom: 20px;
   border-bottom: 2px solid white;
-  
 }
 
-.searchBar{
+.searchBar {
   border: none;
   padding: 10px;
   width: 40%;
   outline: none;
   border-radius: 10px;
-
 }
 
-.searchContainer{
+.searchContainer {
   display: flex;
   align-items: center;
   justify-content: left;
   padding-left: 10px;
-flex: 2;
-
+  flex: 2;
+  background-color: blueviolet;
 }
 
-.dropDownContainer{
+.dropDownContainer {
+  background-color: darkgoldenrod;
+  flex: 1;
+  text-align: right;
+  display: flex;
+}
+
+#shows{
   
-flex: 1;
-text-align: right;
 }
-.info{
-  font-size: 1rem;
-   color: rgb(152, 156, 160);
-
- 
-}
-.info2{
+.countEpisodeResult {
   font-size: 1rem;
   color: rgb(152, 156, 160);
- 
+}
+.countAllEpisode {
+  font-size: 1rem;
+  color: rgb(152, 156, 160);
 }
 
-.dropDown{
+.dropDown {
   padding: 8px 12px;
   color: #333333;
   background-color: #eeeeee;
-  border:  1px solid #dddddd;
- cursor: pointer;
- border-radius: 5px;
-
+  border: 1px solid #dddddd;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .dropDown:focus,
-.dropDown:hover{
-  outline:none;
-  border:  1px solid #bbbbbb;
+.dropDown:hover {
+  outline: none;
+  border: 1px solid #bbbbbb;
 }
 
-.dropDown option{
+.dropDown option {
   background-color: #fff;
 }
-
-
 
 .footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
- background-color: rgb(37, 3, 54);
+  background-color: rgb(37, 3, 54);
   color: white;
   text-align: center;
   padding: 20px 0 20px 0;
 }
-.footer a{
+.footer a {
   text-decoration: none;
   color: red;
 }

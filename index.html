@@ -10,17 +10,20 @@
 
   <body>
     <header class="header">
-      <div class="dropDownContainer">
-        <!-- <label for="cars">Choose a car:</label> -->
+    
+   <div class="dropDownContainer">
+        <select name= "shows" id=shows class="shows"></select>
         <select name="movie" id="movie" class="dropDown"></select>
+        
       </div>
-
+   <!-- -->
       <div class="searchContainer">
-        <input type="text" class="searchBar" />
-        <p class="info"></p>
-        <p class="info2"></p>
-      </div>
-    </header>
+        <!-- <input type="text" class="searchBar" /> -->
+        
+        <p class="countEpisodeResult"></p>
+        <p class="countAllEpisode"></p>
+      </div> 
+    </header> 
     <div id="root"></div>
 <footer class="footer">
   <p>
@@ -32,8 +35,9 @@
     
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
-
+<script src="shows.js"></script>
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
+    <!-- <script src="./backup/success.js"></script> -->
   </body>
 </html>
