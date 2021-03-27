@@ -1,5 +1,5 @@
-async function getData(id = 82) {
-  let url = `https://api.tvmaze.com/shows/${id}/episodes`;
+async function getData(getId = 82) {
+  let url = `https://api.tvmaze.com/shows/${getId}/episodes`;
   try {
     let res = await fetch(url);
     let data = await res.json();
@@ -78,9 +78,9 @@ episodeListMenu().addEventListener("change", () => {
 
     let result = dropDown.options[dropDown.selectedIndex].value;
 
-    let idArr = result.split("+");
-    let episodeId = idArr[0];
-    let movieId = idArr[1];
+    // let idArr = result.split("+");
+    // let episodeId = idArr[0];
+    // let movieId = idArr[1];
 
     const filtered = movie.filter((item) => {
       return item.id == result ;
@@ -126,7 +126,7 @@ async function populateShowsMenu(listMovie, b = true) {
   let selectDefault = "";
   selectDefault += `<option selected="selected">SelectAll</option>`;
   listMovie.map((item) => {
-    menu += `<option value=${item.id}>myId${item.id}${item.name} </option> `;
+    menu += `<option value=${item.id}>${item.name} </option> `;
   });
   dropDownShows().innerHTML = selectDefault + menu;
 }
@@ -155,11 +155,11 @@ dropDownShows().addEventListener("change", () => {
 
               getElement("#root").innerHTML = html;
 
-              showMenu += ` <option value=${item.id + "+" + SHOW_ID}>ali ${
-                item.id
-              }${"epi :" + SHOW_ID} S0${item.season}E0${item.number} -${
-                item.name
-              } </option>`;
+              showMenu += ` <option value=${item.id + "+" + SHOW_ID}> 
+               
+              S0${item.season}E0${item.number} -${item.name} </option>`;
+                
+              
               episodeListMenu().innerHTML = showMenu;
               
             })
