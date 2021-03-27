@@ -52,7 +52,6 @@ async function makePageForEpisodes(listMovie, b = true) {
 }
 
 function renderElements() {
-  //searchBarInput(); // show search bar
   loadEpisodeList();
   makePageForEpisodes(); // show All Episodes
   populateShowsMenu();
