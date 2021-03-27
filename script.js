@@ -1,13 +1,33 @@
-async function getData(getId) {
-  let url = `https://api.tvmaze.com/shows/82/episodes`;
+async function getData(id = 82) {
+  let url = `https://api.tvmaze.com/shows/${id}/episodes`;
   try {
     let res = await fetch(url);
     let data = await res.json();
     return data;
   } catch (error) {}
+
 }
 
-//******************************88tem */
+function getElement(param) {
+  return document.querySelector(param);
+}
+function episodeListMenu() {
+  return (dropDown = document.querySelector("#movie"));
+}
+function menuDefaultSelection() {
+  return dropDown.options[dropDown.selectedIndex].text;
+}
+function dropDownShows() {
+  return (showsDropDown = document.querySelector("#shows"));
+}
+function dropDownShowOptionValue() {
+  return showsDropDown.options[showsDropDown.selectedIndex].value;
+}
+function episodeDropDown(){
+  return dropDown.options[dropDown.selectedIndex].value;
+}
+
+// loads all the movie to the page
 async function makePageForEpisodes(listMovie, b = true) {
   if (b == true) listMovie = await getData();
   wholeMovies = await getData();
@@ -19,70 +39,73 @@ async function makePageForEpisodes(listMovie, b = true) {
                 <div class="summary">${item.summary}</div>
              </div>`;
   });
-
-  episodeRoot("#root").innerHTML = html;
+  getElement("#root").innerHTML = html;
   if (b == true) {
-    episodeRoot(
+    getElement(
       ".countEpisodeResult"
     ).innerText = `\u00A0\ \u00A0\ Displaying ${wholeMovies.length} episodes  `;
   } else {
-    episodeRoot(
+    getElement(
       ".countEpisodeResult"
     ).innerText = `\u00A0\ \u00A0\ Displaying ${listMovie.length} off ${wholeMovies.length} episodes  `;
   }
 }
 
 function renderElements() {
-  searchBarInput(); // show search bar
-  loadMenu(); //populate list menu
+  //searchBarInput(); // show search bar
+  loadEpisodeList();
   makePageForEpisodes(); // show All Episodes
   populateShowsMenu();
 }
 
-function episodeListMenu() {
-  return (dropDown = document.querySelector("#movie"));
-}
 //populate select menu dropDown
-async function loadMenu() {
-  let movie = await getData();
+async function loadEpisodeList() {
   let menu = "";
   let selectDefault = "";
-
+  let movie = await getData();
   selectDefault += `<option selected="selected">SelectAll</option>`;
   movie.map((item) => {
-    menu += `   
-        <option value=${item.id}>S0${item.season}E0${item.number} -${item.name} </option>`;
+    menu += `
+          <option value=${item.id}>S0${item.season}E0${item.number} -${item.name} </option>`;
   });
-
   episodeListMenu().innerHTML = selectDefault + menu;
+}
 
-  // filter's episode based on user selection
-  dropDown.addEventListener("change", () => {
+//Select Individual Episode
+episodeListMenu().addEventListener("change", () => {
+  async function filteredEpisode() {
+    let movie = await getData();
+
     let result = dropDown.options[dropDown.selectedIndex].value;
-    let defaultSelection = dropDown.options[dropDown.selectedIndex].text;
 
-    const filtered = movie.filter((selectedEpisode) => {
-      return selectedEpisode.id == result;
+    let idArr = result.split("+");
+    let episodeId = idArr[0];
+    let movieId = idArr[1];
+
+    const filtered = movie.filter((item) => {
+      return item.id == result ;
     });
-
     makePageForEpisodes(filtered, false);
-    if (defaultSelection == "SelectAll") {
+
+    if (menuDefaultSelection() == "SelectAll") {
       makePageForEpisodes();
     }
-  });
-}
+  }
+  filteredEpisode();
+});
 
-function episodeRoot(param) {
-  return document.querySelector(param);
-}
-
-async function searchBarInput() {
-  let movie = await getData();
+// This function creates and return search field on the page
+function searchBarInput() {
   const searchBar = document.createElement("input");
   searchBar.className = "searchBar";
-  episodeRoot(".searchContainer").appendChild(searchBar);
+  getElement(".searchContainer").appendChild(searchBar);
+  return searchBar;
+}
 
-  searchBar.addEventListener("keyup", (e) => {
+// SearchBar Event listener for keywords entered in the field
+searchBarInput().addEventListener("keyup", (e) => {
+  async function filteredSearchResult() {
+    let movie = await getData();
     e.preventDefault();
     let result = e.target.value.toLowerCase();
     const filtered = movie.filter((item) => {
@@ -91,65 +114,59 @@ async function searchBarInput() {
         item.summary.toLowerCase().includes(result)
       );
     });
-
     makePageForEpisodes(filtered, false);
-  });
-}
-
-function dropDownShows() {
-  return (showsDropDown = document.querySelector("#shows"));
-}
+  }
+  filteredSearchResult();
+});
 
 //populate select menu dropDownShow
-function populateShowsMenu() {
-  const displayShows = getAllShows();
-
-  const ali = loadMenu();
+async function populateShowsMenu(listMovie, b = true) {
+  if (b == true) listMovie = await getAllShows();
   let menu = "";
   let selectDefault = "";
-
   selectDefault += `<option selected="selected">SelectAll</option>`;
-  displayShows.map((item) => {
-    menu += `   
-   <option value=${item.id}>${item.name} </option>
-   `;
+  listMovie.map((item) => {
+    menu += `<option value=${item.id}>myId${item.id}${item.name} </option> `;
   });
-
   dropDownShows().innerHTML = selectDefault + menu;
+}
 
-  // filter's episode based on user selection
-  showsDropDown.addEventListener("change", () => {
-    let result = showsDropDown.options[showsDropDown.selectedIndex].value;
-    //let defaultSelection = showsDropDown.options[showsDropDown.selectedIndex].text;
+dropDownShows().addEventListener("change", () => {
+  selectShows();
+  // function to populate Episode menu based on show selection
+  function selectShows() {
     let html = "";
-    let showMenu ="";
-    displayShows.map((selectedShows) => {
-      const SHOW_ID = selectedShows.id;
-      if (selectedShows.id == result) {
-        //return alert(selectedShows.id);
+    let showMenu = "";
+    const getShowId = getAllShows();
 
+    getShowId.map((selected_Show_Id) => {
+      const SHOW_ID = selected_Show_Id.id;
+
+      if (selected_Show_Id.id == dropDownShowOptionValue()) {
         fetch(`https://api.tvmaze.com/shows/${SHOW_ID}/episodes`)
           .then((res) => res.json())
           .then((data) =>
             data.map((item) => {
               html += `<div class="movieCard">
-                      <h3 class="movieTitle">${item.name} - S0${item.season}E0${item.number}</h3>
-                      <img class="img" src= ${item.image.medium} />
-                      <div class="summary">${item.summary}</div>
-              </div>`;
-              episodeRoot("#root").innerHTML = html;
-             
-      
+                            <h3 class="movieTitle">${item.name} - S0${item.season}E0${item.number}</h3>
+                            <img class="img" src= ${item.image.medium} />
+                            <div class="summary">${item.summary}</div>
+                    </div>`;
+
+              getElement("#root").innerHTML = html;
+
+              showMenu += ` <option value=${item.id + "+" + SHOW_ID}>ali ${
+                item.id
+              }${"epi :" + SHOW_ID} S0${item.season}E0${item.number} -${
+                item.name
+              } </option>`;
+              episodeListMenu().innerHTML = showMenu;
+              
             })
           );
       }
-   showMenu += ` <option value=${selectedShows.id}>S0${selectedShows.season}E0${selectedShows.number} -${selectedShows.name} </option>`; 
-         episodeListMenu().innerHTML =  showMenu;
-      });
- 
-      
-      
-  });
-}
+    });
+  }
+});
 
 renderElements();
