@@ -136,7 +136,7 @@ async function populateShowsMenu(listMovie, b = true) {
   if (b == true) listMovie = await getAllShows();
   let menu = "";
   let selectDefault = "";
-  //selectDefault += `<option selected="selected">SelectAll</option>`;
+ 
 
   // sort the shows names on alphabetical order
   listMovie = listMovie.sort(function (show1, show2) {
