@@ -206,12 +206,11 @@ function selectShows(id) {
 }
 
 function listShowDetailsOnPage() {
-  const listShows = getAllShows();
-  episodeListMenu().className = "hideEpisodeMenu";
+    episodeListMenu().className = "hideEpisodeMenu";
+    const listShows = getAllShows();
+    let html = "";
 
-  let html = "";
-
-  listShows.map((show) => {
+  listShows.forEach((show) => {
     const {name,genres,status,runtime,summary} = show;
     const SHOW_ID = show.id;
     if (show.image === null) {
