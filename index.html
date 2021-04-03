@@ -15,18 +15,33 @@
     <header class="header">
     
        <div class="dropDownContainer">
-        <select name= "shows" id=shows class="shows"></select>
+        <select name= "shows" id=shows class="dropDown"></select>
         <select name="movie" id="movie" class="dropDown"></select>
+        <!-- <input type="text" id=searchBar> -->
       </div>
    
-      <div class="searchContainer">
-        <!-- <input type="text" class="searchBar" /> -->
-         
-        <p class="countEpisodeResult"></p>
-        <p class="countAllEpisode"></p> 
+      <div class="searchContainer">    
+          <p class="countEpisodeResult"></p>
+          <p class="countAllEpisode"></p> 
        </div> 
+
     </header>  
-    <div id="root"></div> 
+   
+    <div id="episodeGrid"></div>
+    <div id="root" ></div>  
+
+      
+    
+
+
+    
+       
+   
+    <!-- <div class="listAllShow"></div>
+   
+    <div class="listAllEpisodes"></div>
+    -->
+    
 <footer class="footer">
   <p>
       Data on this page is come from
@@ -37,9 +52,11 @@
     
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <!-- <script src="episodes.js"></script> -->
-<script src="shows.js"></script>
+    
+   <script src="shows.js"></script>
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
   
   </body>
+  
 </html>

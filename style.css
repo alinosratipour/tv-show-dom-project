@@ -5,16 +5,18 @@
 }
 
 body {
-  background-color: rgb(215, 179, 236);
+    background-color: darkorange;
 }
-.box {
+/* .box {
+  width: 80%;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
   padding-top: 20px;
-}
+} */
 
-.movieCard {
+/* .movieCard {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
@@ -22,6 +24,20 @@ body {
   -moz-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
   padding: 0px 0 40px 0;
   text-align: center;
+
+  
+} */
+
+/* .rootShow {
+  background-color: crimson;
+} */
+/* .hideEpisodeCard {
+  display: none;
+} */
+
+.showImage{
+  width: 200px;
+  height:200px;
 }
 
 .movieTitle {
@@ -44,16 +60,86 @@ body {
 }
 
 #root {
+  background-color: darkorange;
+  
+}
+
+#episodeGrid {
   width: 80%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
   padding-top: 20px;
+  
+  
 }
 
+.episodeCard {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
+  padding: 0px 0 40px 0;
+  text-align: center;   
+  
+}
+
+.showsList {
+  display: flex;
+  box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -webkit-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  width: 90%;
+  background-color: rgb(109, 2, 2);
+  padding: 25px;
+  margin: 0 auto;
+}
+
+.showTitle {
+  display: flex;
+  padding-left: 70px;
+  font-size: 2rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.showSummary {
+  color: rgb(175, 166, 166);
+  width: 50%;
+  padding: 20px;
+  text-align: left;
+}
+
+.showDetails {
+  width: 25%;
+  border-radius: 10px;
+  color: rgb(31, 25, 25);
+  background-color: rgb(235, 235, 235);
+  margin: 0 auto;
+  box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -webkit-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  padding-left: 30px;
+}
+
+.showDetailsItems {
+  list-style: none;
+  padding-top: 40px;
+  font-weight: 800;
+  color: rgb(90, 87, 87);
+}
+ .hideEpisodeMenu {
+  display: none;
+}
+/*
+.showEpisodeMenu {
+  display: block;
+} */
+
 .header {
-  background-color: rgb(37, 3, 54);
+  background-color: rgb(80, 5, 8);
   padding-top: 80px;
   display: flex;
   align-items: center;
@@ -61,7 +147,9 @@ body {
   padding-bottom: 20px;
   border-bottom: 2px solid white;
 }
-
+.hideSearchBarInput{
+  display: none;
+}
 .searchBar {
   border: none;
   padding: 10px;
@@ -76,22 +164,18 @@ body {
   justify-content: left;
   padding-left: 10px;
   flex: 2;
-  background-color: blueviolet;
 }
 
 .dropDownContainer {
-  background-color: darkgoldenrod;
   flex: 1;
   text-align: right;
   display: flex;
 }
 
-#shows{
-  
-}
 .countEpisodeResult {
   font-size: 1rem;
   color: rgb(152, 156, 160);
+  padding: 0 15px 0 15px;
 }
 .countAllEpisode {
   font-size: 1rem;
