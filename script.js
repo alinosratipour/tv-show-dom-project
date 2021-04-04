@@ -212,32 +212,31 @@ function selectShows(id) {
 // }
 
 
-
 function listShowDetailsOnPage() {
   episodeListMenu().className = "hideEpisodeMenu";
   let html = "";
 
-const showWithImage = listAllShows.filter((img) => {
-  const { image } = img;
-  return image !== null;
-});
+// const showWithImage = listAllShows.filter((img) => {
+//   const { image } = img;
+//   return image !== null;
+// });
  
-
-  showWithImage.forEach((show) => {
-    const { name, genres, status, runtime, summary, image:{medium}, rating } = show;
+ listAllShows.forEach((show) => {
+   
+      
+    const { name, genres, status, runtime, summary, image, rating } = show;
     const SHOW_ID = show.id;
-    //  const img =  image.medium;
-     //if (medium !== null) {
-    //   return ""
 
-    //  }else{
+    if (image !== null) {
+     const img =  image.medium;
+     //const {image:{medium}} = show;
 
       html += `
        <a  onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>
        
                <div class="showsList" >
                               
-                    <img  src= "${medium}" alt="tvShows" />
+                    <img  src= "${img}" alt="tvShows" />
                     <div class="showSummary">${summary}</div>
                     <ul  class="showDetails"> 
                       <li class="showDetailsItems">Rated: ${rating.average}</li>
@@ -252,8 +251,8 @@ const showWithImage = listAllShows.filter((img) => {
 
       getElement(
         ".countEpisodeResult"
-      ).innerText = `\u00A0\ \u00A0\ found ${showWithImage.length} shows  `;
-    //}
+      ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
+      }
   });
 }
 
