@@ -244,11 +244,11 @@ function listShowDetailsOnPage() {
   //const listShows = getAllShows();
   let html = "";
 
-
   listAllShows.forEach((show) => {
     const { name, genres, status, runtime, summary, image, rating } = show;
     const SHOW_ID = show.id;
-    if (image === null) {
+    const img = image.medium;
+    if (img === null) {
       return "";
     } else {
       html += `
@@ -257,7 +257,7 @@ function listShowDetailsOnPage() {
        
                <div class="showsList" >
                               
-                    <img  src= "${image.medium}" alt="tvShows" />
+                    <img  src= "${img}" alt="tvShows" />
                     <div class="showSummary">${summary}</div>
                     <ul  class="showDetails"> 
                       <li class="showDetailsItems">Rated: ${rating.average}</li>
