@@ -221,8 +221,8 @@ function listShowDetailsOnPage() {
   episodeListMenu().className = "hideEpisodeMenu";
   let html = "";
 
-const showWithImage = listAllShows.filter((el) => {
-  const { image } = el;
+const showWithImage = listAllShows.filter((img) => {
+  const { image } = img;
   return image !== null;
 });
  
