@@ -1,3 +1,5 @@
+let listAllShows =  getAllShows();
+
 async function getData(getId = 82) {
   let url = `https://api.tvmaze.com/shows/${getId}/episodes`;
   try {
@@ -8,6 +10,48 @@ async function getData(getId = 82) {
     console.log(error);
   }
 }
+
+// // This variable contain all Episodes
+// let allEpisodes;
+
+// function setup() {
+//     // setAllEpisodes("https://api.tvmaze.com/shows/167/episodes");
+//     const allShows = getAllShows();
+//     setAllShows(allShows);
+// }
+
+// Fetch the episodes by API
+// function setAllEpisodes(url){
+//     // let url = "https://api.tvmaze.com/shows/167/episodes";
+
+//     fetch(url).then(function (response) {
+//         if (response.ok) {
+//             return response.json();
+//         }
+//         throw `${response.status} ${response.statusText}`
+//     })
+//         .then(function (data) {
+//             allEpisodes = data;
+//             ClearEpisodeSelect();
+//             makePageForEpisodes(allEpisodes);
+//             setupSelector(allEpisodes);
+//         })
+//         .catch(function (error) {
+//             console.log("There are some Errors", error);
+//         })
+// }
+// setup the code pf the Episode to add it in the title
+// function getEpisodeCode(episode) {
+//     let season = episode.season;
+//     let number = episode.number;
+//     if (season <= 9)
+//         season = "0" + season;
+//     if (number <= 9)
+//         number = "0" + number;
+
+//     return "S" + season + "E" + number;
+
+// }
 
 function getElement(param) {
   return document.querySelector(param);
@@ -63,13 +107,6 @@ async function makePageForEpisodes(listMovie, b = true) {
   }
 }
 
-function renderElements() {
-  loadEpisodeList();
-  // makePageForEpisodes(); // show All Episodes
-  populateShowsMenu();
-  listShowDetailsOnPage();
-}
-
 //populate select menu dropDown
 async function loadEpisodeList() {
   let menu = "";
@@ -119,32 +156,29 @@ async function filteredSearchResult(e) {
   let id = dropDownShowOptionValue();
   let movie = await getData(id);
   let result = e.target.value.toLowerCase();
-    const filtered = movie.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(result) ||
-        item.summary.toLowerCase().includes(result)
-      );
-    });
+  const filtered = movie.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(result) ||
+      item.summary.toLowerCase().includes(result)
+    );
+  });
   makePageForEpisodes(filtered, false);
 }
 // SearchBar Event listener for keywords entered in the field
 searchBarInput().addEventListener("keyup", filteredSearchResult);
 
-
-
-
 //populate select menu dropDownShow
 async function populateShowsMenu(id = 82) {
-  let listMovie = await getAllShows();
+  //let listMovie = await getAllShows();
   let menu = "";
   let selectDefault = "";
 
   // sort the shows names on alphabetical order
-  listMovie = listMovie.sort(function (show1, show2) {
+  listAllShows = listAllShows.sort(function (show1, show2) {
     return show1.name.localeCompare(show2.name);
   });
 
-  listMovie.forEach((item) => {
+  listAllShows.forEach((item) => {
     if (item.id == id) {
       menu += `<option  selected="selected" value=${item.id}>${item.name} </option> `;
     } else {
@@ -166,7 +200,7 @@ async function getShowsEpisodes(id) {
   let movie = await getData(id);
   showMenu += `<option  selected="selected">SelectAll</option>`;
   movie.map((item) => {
-    const {name, season,number,summary} = item;
+    const { name, season, number, summary } = item;
     if (item.image === null) {
       return "";
     } else {
@@ -206,14 +240,15 @@ function selectShows(id) {
 }
 
 function listShowDetailsOnPage() {
-    episodeListMenu().className = "hideEpisodeMenu";
-    const listShows = getAllShows();
-    let html = "";
+  episodeListMenu().className = "hideEpisodeMenu";
+  //const listShows = getAllShows();
+  let html = "";
 
-  listShows.forEach((show) => {
-    const {name,genres,status,runtime,summary} = show;
+
+  listAllShows.forEach((show) => {
+    const { name, genres, status, runtime, summary, image, rating } = show;
     const SHOW_ID = show.id;
-    if (show.image === null) {
+    if (image === null) {
       return "";
     } else {
       html += `
@@ -221,28 +256,34 @@ function listShowDetailsOnPage() {
        <a  onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>
        
                <div class="showsList" >
-                            
-                    <img alt="tv shows" src= ${show.image.medium} />
+                              
+                    <img  src= "${image.medium}" alt="tvShows" />
                     <div class="showSummary">${summary}</div>
-                        <ul  class="showDetails"> 
-                          <li class="showDetailsItems">Rated: ${show.rating.average}</li>
-                          <li class="showDetailsItems"> Generes: ${genres}</li>
-                          <li class="showDetailsItems"  >Status: ${status}</li>
-                          <li class="showDetailsItems" >Runtime: ${runtime}</li>
-                       </ul>                  
-              </div>  
+                    <ul  class="showDetails"> 
+                      <li class="showDetailsItems">Rated: ${rating.average}</li>
+                      <li class="showDetailsItems"> Generes: ${genres}</li>
+                      <li class="showDetailsItems"  >Status: ${status}</li>
+                      <li class="showDetailsItems" >Runtime: ${runtime}</li>
+                    </ul>                  
+                  </div>  
               
               `;
       getElement("#root").innerHTML = html;
 
       getElement(
         ".countEpisodeResult"
-      ).innerText = `\u00A0\ \u00A0\ found ${listShows.length} shows  `;
+      ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
     }
   });
 }
 
-const listShows = getAllShows();
+
+function renderElements() {
+  loadEpisodeList();
+  // makePageForEpisodes(); // show All Episodes
+  populateShowsMenu();
+  listShowDetailsOnPage();
+}
 
 
 
