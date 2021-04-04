@@ -9,36 +9,32 @@ async function getData(getId = 82) {
     console.log(error);
   }
 }
-
+// const data = await getData(id);
+// console.log(data)
 function listShowDetailsOnPage() {
   episodeListMenu().className = "hideEpisodeMenu";
   let html = "";
-
   listAllShows.forEach((show) => {
-    const { name, genres, status, runtime, summary, image } = show;
-    const SHOW_ID = show.id;
+    const { id,name, genres, status, runtime, summary, image } = show;
+    const SHOW_ID = id;
     if (image !== null) {
       const {
         image: { medium },
         rating: { average },
       } = show;
+
       html += `
-     
-       <a  onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>
-       
-               <div class="showsList" >
-                              
-                    <img alt="tvShows" src= ${medium} />
-                    <div class="showSummary">${summary}</div>
-                    <ul  class="showDetails"> 
-                      <li class="showDetailsItems">Rated: ${average}</li>
-                      <li class="showDetailsItems"> Generes: ${genres}</li>
-                      <li class="showDetailsItems"  >Status: ${status}</li>
-                      <li class="showDetailsItems" >Runtime: ${runtime}</li>
-                    </ul>                  
-                  </div>  
-              
-              `;
+    <a onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>      
+            <div class="showsList" >                             
+              <img alt="tvShows" src= ${medium} />
+              <div class="showSummary">${summary}</div>
+              <ul  class="showDetails"> 
+                  <li class="showDetailsItems">Rated: ${average}</li>
+                  <li class="showDetailsItems"> Generes: ${genres}</li>
+                  <li class="showDetailsItems"  >Status: ${status}</li>
+                  <li class="showDetailsItems" >Runtime: ${runtime}</li>
+              </ul>                  
+           </div>`;
     }
   });
   getElement("#root").innerHTML = html;
@@ -73,12 +69,12 @@ async function makePageForEpisodes(listMovie, b = true) {
   let id = dropDownShowOptionValue();
   wholeMovies = await getData(id);
   let html = "";
-  listMovie.forEach((item) => {
-    const { name, season, number, image, summary } = item;
+  listMovie.forEach((episode) => {
+    const { name, season, number, image, summary } = episode;
     if (image !== null) {
       const {
         image: { medium },
-      } = item;
+      } = episode;
       html += ` 
              
                 <div class="episodeCard">
@@ -110,12 +106,14 @@ async function loadEpisodeList() {
   let selectDefault = "";
   let movie = await getData();
   selectDefault += `<option selected="selected">SelectAll</option>`;
-  movie.forEach((item) => {
+  movie.forEach((episode) => {
     menu += `
         
-          <option value=${item.id}>S0${
-      item.season
-    }E-${item.number.toString().padStart(2, "0")} -${item.name} </option>`;
+          <option value=${episode.id}>S0${
+      episode.season
+    }E-${episode.number.toString().padStart(2, "0")} -${
+      episode.name
+    } </option>`;
   });
   episodeListMenu().innerHTML = selectDefault + menu;
 }
@@ -126,20 +124,16 @@ async function filteredEpisode() {
   let episodeId = idArr[0];
   let movieId = idArr[1];
   let movie = await getData(movieId);
-
-  const filtered = movie.filter((item) => {
-    return item.id == episodeId;
-  });
-
+  const filtered = movie.filter(episode =>episode.id == episodeId);
   makePageForEpisodes(filtered, false);
 
   if (menuDefaultSelection() == episodeId) {
     selectShows();
   }
 }
-
 //Select Individual Episode
 episodeListMenu().addEventListener("change", filteredEpisode);
+
 
 // This function creates and return search field on the page
 function searchBarInput() {
@@ -202,15 +196,13 @@ async function getShowsEpisodes(id) {
       const {
         image: { medium },
       } = item;
-      html += ` 
-               
-                  <div class="episodeCard">
-                      <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
-                      <img class="img" src= ${medium} />
-                      <div class="summary">${summary}</div>
-                  
-         </div>
-             `;
+      html += `        
+      <div class="episodeCard">
+          <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
+          <img class="img" src= ${medium} />
+          <div class="summary">${summary}</div>             
+        </div>`;
+
       getElement("#episodeGrid").innerHTML = html;
       getElement("#root").innerHTML = "";
 
