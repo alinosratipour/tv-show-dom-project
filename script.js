@@ -211,12 +211,8 @@ function selectShows(id) {
 //   return result;
 // }
 
-function test(){
-   
-console.log(showWithImage.length);
-  listShowDetailsOnPage(showWithImage);
-}
-console.log("with no filter",listAllShows.length);
+
+
 function listShowDetailsOnPage() {
   episodeListMenu().className = "hideEpisodeMenu";
   let html = "";
