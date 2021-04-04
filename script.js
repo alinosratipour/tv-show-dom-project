@@ -252,7 +252,7 @@ const showWithImage = listAllShows.filter((img) => {
 
       getElement(
         ".countEpisodeResult"
-      ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
+      ).innerText = `\u00A0\ \u00A0\ found ${showWithImage.length} shows  `;
     //}
   });
 }
