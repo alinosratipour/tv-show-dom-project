@@ -247,13 +247,14 @@ function listShowDetailsOnPage() {
                   </div>  
               
               `;
-      getElement("#root").innerHTML = html;
-
-      getElement(
-        ".countEpisodeResult"
-      ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
+      
       }
   });
+  getElement("#root").innerHTML = html;
+
+  getElement(
+    ".countEpisodeResult"
+  ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
 }
 
 function renderElements() {
