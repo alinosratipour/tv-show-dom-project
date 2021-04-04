@@ -211,18 +211,24 @@ function selectShows(id) {
 //   return result;
 // }
 
+function test(){
+   
+console.log(showWithImage.length);
+  listShowDetailsOnPage(showWithImage);
+}
+console.log("with no filter",listAllShows.length);
 function listShowDetailsOnPage() {
   episodeListMenu().className = "hideEpisodeMenu";
   let html = "";
 
-const ali = listAllShows.filter(el=>{
-return el.image !== null;
-})
+const showWithImage = listAllShows.filter((el) => {
+  const { image } = el;
+  return image !== null;
+});
+ 
 
-
-
-  ali.forEach((show) => {
-    const { name, genres, status, runtime, summary, image, rating } = show;
+  showWithImage.forEach((show) => {
+    const { name, genres, status, runtime, summary, image:{medium}, rating } = show;
     const SHOW_ID = show.id;
     //  const img =  image.medium;
      //if (medium !== null) {
@@ -235,7 +241,7 @@ return el.image !== null;
        
                <div class="showsList" >
                               
-                    <img  src= "${image.medium}" alt="tvShows" />
+                    <img  src= "${medium}" alt="tvShows" />
                     <div class="showSummary">${summary}</div>
                     <ul  class="showDetails"> 
                       <li class="showDetailsItems">Rated: ${rating.average}</li>
@@ -260,6 +266,7 @@ function renderElements() {
   // makePageForEpisodes(); // show All Episodes
   populateShowsMenu();
   listShowDetailsOnPage();
+ // test()
 }
 
 renderElements();
