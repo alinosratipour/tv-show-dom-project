@@ -141,35 +141,56 @@ body {
 .header {
   background-color: rgb(80, 5, 8);
   padding-top: 80px;
+ 
+  padding-bottom: 20px;
+  border-bottom: 2px solid white;
+ 
+}
+.hideSearchBar{
+  display: none;
+}
+.showSearchBar{
+  display: block;
+}
+#episodeSearch {
+  border: none;
+  padding: 10px;
+  width: 60%;
+  outline: none;
+  border-radius: 10px;
+
+}
+
+
+
+#showsSearch{
+  border: none;
+  padding: 10px;
+  width: 60%;
+  outline: none;
+  border-radius: 10px;
+  
+}
+
+
+.searchContainer {
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 20px;
-  border-bottom: 2px solid white;
-}
-.hideSearchBarInput{
-  display: none;
-}
-.searchBar {
-  border: none;
-  padding: 10px;
-  width: 40%;
-  outline: none;
-  border-radius: 10px;
-}
-
-.searchContainer {
-  display: flex;
-  align-items: center;
-  justify-content: left;
   padding-left: 10px;
-  flex: 2;
 }
+.searchBarContainer{
+  flex: 2;
+  background-color: darkorange;
+  margin-left: 100px;
 
+}
 .dropDownContainer {
-  flex: 1;
-  text-align: right;
+  flex-direction: column;
   display: flex;
+  width: 100%;
+ align-items: center;
 }
 
 .countEpisodeResult {
@@ -189,7 +210,21 @@ body {
   border: 1px solid #dddddd;
   cursor: pointer;
   border-radius: 5px;
+  width: 50%;
+  margin-bottom: 20px;
 }
+
+#episode{
+   padding: 8px 12px;
+  color: #333333;
+  background-color: #eeeeee;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
 
 .dropDown:focus,
 .dropDown:hover {

@@ -1,4 +1,5 @@
-let listAllShows = getAllShows();
+const listAllShows = getAllShows();
+
 async function getData(getId = 82) {
   let url = `https://api.tvmaze.com/shows/${getId}/episodes`;
   try {
@@ -9,13 +10,16 @@ async function getData(getId = 82) {
     console.log(error);
   }
 }
-// const data = await getData(id);
-// console.log(data)
-function listShowDetailsOnPage() {
-  episodeListMenu().className = "hideEpisodeMenu";
+
+function listShowDetailsOnPage(listShow, isAllShows=true) {
+    getElement("#episode").className = "hideEpisodeMenu";
+     getElement("#episodeSearch").className = "hideSearchBar";
+    if (isAllShows == true) listShow = listAllShows;
+
+  
   let html = "";
-  listAllShows.forEach((show) => {
-    const { id,name, genres, status, runtime, summary, image } = show;
+  listShow.forEach((show) => {
+    const { id, name, genres, status, runtime, summary, image } = show;
     const SHOW_ID = id;
     if (image !== null) {
       const {
@@ -44,32 +48,24 @@ function listShowDetailsOnPage() {
   ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
 }
 
+
+
+
+
+
 function getElement(param) {
   return document.querySelector(param);
 }
-function episodeListMenu() {
-  return (dropDown = document.querySelector("#movie"));
-}
-function menuDefaultSelection() {
-  return dropDown.options[dropDown.selectedIndex].text;
-}
-function dropDownShows() {
-  return (showsDropDown = document.querySelector("#shows"));
-}
-function dropDownShowOptionValue() {
-  return showsDropDown.options[showsDropDown.selectedIndex].value;
-}
-function episodeDropDown() {
-  return dropDown.options[dropDown.selectedIndex].value;
-}
 
 // loads all the Episodes to the page
-async function makePageForEpisodes(listMovie, b = true) {
-  if (b == true) listMovie = await getData();
-  let id = dropDownShowOptionValue();
-  wholeMovies = await getData(id);
+async function makePageForEpisodes(listEpisodes, isAllEpisodes= true) { 
+
+  if (isAllEpisodes == true) listEpisodes = await getData();
+  let id = getElement("#shows").options[getElement("#shows").selectedIndex].value;
+    
+   wholeMovies = await getData(id);
   let html = "";
-  listMovie.forEach((episode) => {
+  listEpisodes.forEach((episode) => {
     const { name, season, number, image, summary } = episode;
     if (image !== null) {
       const {
@@ -77,35 +73,33 @@ async function makePageForEpisodes(listMovie, b = true) {
       } = episode;
       html += ` 
              
-                <div class="episodeCard">
-                    <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
-                    <img class="img" src= ${medium} />
-                    <div class="summary">${summary}</div>
-                </div>
-           
-             `;
+          <div class="episodeCard">
+              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
+              <img class="img" src= ${medium} />
+              <div class="summary">${summary}</div>
+        </div>`;             
     }
   });
 
   getElement("#episodeGrid").innerHTML = html;
 
-  if (b == true) {
+  if (isAllEpisodes == true) {
     getElement(
       ".countEpisodeResult"
     ).innerText = `\u00A0\ \u00A0\ Displaying ${wholeMovies.length} episodes  `;
   } else {
     getElement(
       ".countEpisodeResult"
-    ).innerText = `\u00A0\ \u00A0\ Displaying ${listMovie.length} off ${wholeMovies.length} episodes  `;
+    ).innerText = `\u00A0\ \u00A0\ Displaying ${listEpisodes.length} off ${wholeMovies.length} episodes  `;
   }
 }
 
 //populate select menu dropDown
 async function loadEpisodeList() {
   let menu = "";
-  let selectDefault = "";
+ // let selectDefault = "";
   let movie = await getData();
-  selectDefault += `<option selected="selected">SelectAll</option>`;
+ // selectDefault += `<option selected="selected">SelectAll</option>`;
   movie.forEach((episode) => {
     menu += `
         
@@ -115,57 +109,86 @@ async function loadEpisodeList() {
       episode.name
     } </option>`;
   });
-  episodeListMenu().innerHTML = selectDefault + menu;
+ // getElement("#episode").innerHTML = selectDefault + menu;
+  getElement("#episode").innerHTML =  menu;
 }
 
 async function filteredEpisode() {
-  let result = dropDown.options[dropDown.selectedIndex].value;
+  const option = getElement("#episode").options[getElement("#episode").selectedIndex].text;
+  let result = getElement("#episode").options[getElement("#episode").selectedIndex].value;
   let idArr = result.split("+");
   let episodeId = idArr[0];
   let movieId = idArr[1];
   let movie = await getData(movieId);
-  const filtered = movie.filter(episode =>episode.id == episodeId);
+  const filtered = movie.filter((episode) => episode.id == episodeId);
   makePageForEpisodes(filtered, false);
 
-  if (menuDefaultSelection() == episodeId) {
+  if (option === episodeId) {
     selectShows();
   }
 }
 //Select Individual Episode
-episodeListMenu().addEventListener("change", filteredEpisode);
-
+getElement("#episode").addEventListener("change", filteredEpisode);
 
 // This function creates and return search field on the page
-function searchBarInput() {
-  const searchBar = document.createElement("input");
-  searchBar.className = "searchBar";
-  getElement(".searchContainer").appendChild(searchBar);
-  return searchBar;
-}
+// function searchBarInput() {
+//   const searchBar = document.createElement("input");
+//   searchBar.className = "searchBar";
+//   getElement(".searchContainer").appendChild(searchBar);
+//   return searchBar;
+// }
 
-async function filteredSearchResult(e) {
-  let id = dropDownShowOptionValue();
+async function episodeSearchResult(e) {
+  let id = getElement("#shows").options[getElement("#shows").selectedIndex]
+    .value;
+
   let movie = await getData(id);
   let result = e.target.value.toLowerCase();
   const filtered = movie.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(result) ||
-      item.summary.toLowerCase().includes(result)
-    );
+     if(item.name !== null && item.summary !== null){
+        return (
+        item.name.toLowerCase().includes(result) ||
+        item.summary.toLowerCase().includes(result)
+       );
+     }
+   
   });
   makePageForEpisodes(filtered, false);
 }
 // SearchBar Event listener for keywords entered in the field
-searchBarInput().addEventListener("keyup", filteredSearchResult);
+//searchBarInput().addEventListener("keyup", episodeSearchResult);
+getElement("#episodeSearch").addEventListener("keyup", episodeSearchResult);
+
+function filteredShows(e){
+//let id = getElement("#shows").options[getElement("#shows").selectedIndex].value;
+   
+
+  //let movie = await getData(id);
+  let result = e.target.value.toLowerCase();
+  
+  const filtered = listAllShows.filter((item) => {
+     if(item.name !== null && item.summary !== null){
+        return (
+        item.name.toLowerCase().includes(result) ||
+        item.summary.toLowerCase().includes(result)
+       );
+     }
+   
+  });
+  listShowDetailsOnPage(filtered,false);
+  console.log(filtered);
+}
+getElement("#showsSearch").addEventListener("keyup", filteredShows);
+//searchBarInput().addEventListener("keyup", filteredShows);
 
 //populate select menu dropDownShow
 async function populateShowsMenu(id = 82) {
-  //let listMovie = await getAllShows();
+  
   let menu = "";
   let selectDefault = "";
 
   // sort the shows names on alphabetical order
-  listAllShows = listAllShows.sort(function (show1, show2) {
+  listAllShows.sort(function (show1, show2) {
     return show1.name.localeCompare(show2.name);
   });
 
@@ -177,64 +200,66 @@ async function populateShowsMenu(id = 82) {
     }
   });
 
-  dropDownShows().innerHTML = selectDefault + menu;
+  getElement("#shows").innerHTML = selectDefault + menu;
 }
 
-dropDownShows().addEventListener("change", selectShows);
+getElement("#shows").addEventListener("change", selectShows);
 
 //render on the page and populate episode drop down based on show selection.
 async function getShowsEpisodes(id) {
+  getElement("#showsSearch").className = "hideSearchBar";
+  getElement("#episodeSearch").className = "showSearchBar";
   populateShowsMenu(id);
-  episodeListMenu().className = "showEpisodeMenu";
+  getElement("#episode").className = "showEpisodeMenu";
+
   let html = "";
   let showMenu = "";
   let movie = await getData(id);
   showMenu += `<option  selected="selected">SelectAll</option>`;
-  movie.map((item) => {
-    const { name, season, number, summary, image } = item;
+  movie.forEach((episode) => {
+    const { name, season, number, summary, image } = episode;
     if (image !== null) {
-      const {
-        image: { medium },
-      } = item;
+      const {image: { medium } } = episode;
+        
+     
       html += `        
       <div class="episodeCard">
           <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
           <img class="img" src= ${medium} />
           <div class="summary">${summary}</div>             
-        </div>`;
+      </div>`;
 
-      getElement("#episodeGrid").innerHTML = html;
-      getElement("#root").innerHTML = "";
-
-      showMenu += ` <option value=${item.id + "+" + id}>
+        showMenu += ` <option value=${episode.id + "+" + id}>
           S0${season}E0${number} -${name} </option>`;
-
-      episodeListMenu().innerHTML = showMenu;
+         getElement("#episode").innerHTML = showMenu;
     }
   });
 
-  getElement(
-    ".countEpisodeResult"
-  ).innerText = `\u00A0\ \u00A0\ Displaying ${movie.length}  episodes  `;
+      getElement("#episodeGrid").innerHTML = html;
+      getElement("#root").innerHTML = "";
+      getElement(
+      ".countEpisodeResult"
+      ).innerText = `\u00A0\ \u00A0\ Displaying ${movie.length}  episodes  `;
 }
 
 // function to populate Episode menu based on show selection
 function selectShows(id) {
-  const getShowId = getAllShows(id);
-  getShowId.forEach((selected_Show_Id) => {
-    const SHOW_ID = selected_Show_Id.id;
-    // if user select show then it find's episodes based on show selection
-    if (selected_Show_Id.id == dropDownShowOptionValue()) {
-      getShowsEpisodes(SHOW_ID);
-    }
+  const option = getElement("#shows").options[getElement("#shows").selectedIndex].value;
+  listAllShows.forEach((show) => {
+    const SHOW_ID = show.id;
+      if (show.id == option) {
+        getShowsEpisodes(SHOW_ID);
+      }
   });
 }
 
-function renderElements() {
+function loadContent() {
   loadEpisodeList();
-  // makePageForEpisodes(); // show All Episodes
   populateShowsMenu();
   listShowDetailsOnPage();
+  
 }
 
-renderElements();
+
+
+window.onload = loadContent;
