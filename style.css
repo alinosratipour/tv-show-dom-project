@@ -92,11 +92,9 @@ body {
 }
 
 .showTitle {
-  display: flex;
-  padding-left: 70px;
-  font-size: 2rem;
-  cursor: pointer;
-  text-decoration: none;
+ margin-left: 70px;
+ cursor: pointer;
+ font-size: 1.8em;
 }
 
 .showSummary {
