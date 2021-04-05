@@ -14,13 +14,12 @@ async function getData(getId = 82) {
 function listShowDetailsOnPage(listShow, isAllShows=true) {
     getElement("#episode").className = "hideEpisodeMenu";
      getElement("#episodeSearch").className = "hideSearchBar";
-    if (isAllShows == true) listShow = listAllShows;
-
-  
-  let html = "";
-  listShow.forEach((show) => {
-    const { id, name, genres, status, runtime, summary, image } = show;
-    const SHOW_ID = id;
+     getElement("#btnShows").className = "btnHidden";
+    if (isAllShows == true) listShow = listAllShows; 
+    let html = "";
+    listShow.forEach((show) => {
+   const { id, name, genres, status, runtime, summary, image } = show;
+   const SHOW_ID = id;
     if (image !== null) {
       const {
         image: { medium },
@@ -30,7 +29,7 @@ function listShowDetailsOnPage(listShow, isAllShows=true) {
       html += `
     <a onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>      
             <div class="showsList" >                             
-              <img alt="tvShows" src= ${medium} />
+              <img alt="tvShows" class="showImage" src= ${medium} />
               <div class="showSummary">${summary}</div>
               <ul  class="showDetails"> 
                   <li class="showDetailsItems">Rated: ${average}</li>
@@ -43,13 +42,10 @@ function listShowDetailsOnPage(listShow, isAllShows=true) {
   });
   getElement("#root").innerHTML = html;
 
-  getElement(
-    ".countEpisodeResult"
-  ).innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows  `;
+  getElement(".countEpisodeResult").innerText = `\u00A0\ \u00A0\ found ${listAllShows.length} shows`;
+    
+  
 }
-
-
-
 
 
 
@@ -78,7 +74,16 @@ async function makePageForEpisodes(listEpisodes, isAllEpisodes= true) {
               <img class="img" src= ${medium} />
               <div class="summary">${summary}</div>
         </div>`;             
+    
+    }else{
+      html+= `
+      <div class="episodeCard">
+              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
+              <img class="img" src= "./img.png" />
+              <div class="summary">${summary}</div>
+        </div>`;
     }
+    
   });
 
   getElement("#episodeGrid").innerHTML = html;
@@ -130,13 +135,7 @@ async function filteredEpisode() {
 //Select Individual Episode
 getElement("#episode").addEventListener("change", filteredEpisode);
 
-// This function creates and return search field on the page
-// function searchBarInput() {
-//   const searchBar = document.createElement("input");
-//   searchBar.className = "searchBar";
-//   getElement(".searchContainer").appendChild(searchBar);
-//   return searchBar;
-// }
+
 
 async function episodeSearchResult(e) {
   let id = getElement("#shows").options[getElement("#shows").selectedIndex]
@@ -183,10 +182,8 @@ getElement("#showsSearch").addEventListener("keyup", filteredShows);
 
 //populate select menu dropDownShow
 async function populateShowsMenu(id = 82) {
-  
   let menu = "";
   let selectDefault = "";
-
   // sort the shows names on alphabetical order
   listAllShows.sort(function (show1, show2) {
     return show1.name.localeCompare(show2.name);
@@ -209,6 +206,7 @@ getElement("#shows").addEventListener("change", selectShows);
 async function getShowsEpisodes(id) {
   getElement("#showsSearch").className = "hideSearchBar";
   getElement("#episodeSearch").className = "showSearchBar";
+  getElement("#btnShows").className = "btnShow";
   populateShowsMenu(id);
   getElement("#episode").className = "showEpisodeMenu";
 
@@ -232,7 +230,19 @@ async function getShowsEpisodes(id) {
         showMenu += ` <option value=${episode.id + "+" + id}>
           S0${season}E0${number} -${name} </option>`;
          getElement("#episode").innerHTML = showMenu;
-    }
+    
+        }else{
+      html += ` 
+             
+          <div class="episodeCard">
+              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
+              <img class="img" src= "./img.png" />
+              <div class="summary">${summary}</div>
+        </div>`;  
+                showMenu += ` <option value=${episode.id + "+" + id}>
+                S0${season}E0${number} -${name} </option>`;
+                getElement("#episode").innerHTML = showMenu;
+        }
   });
 
       getElement("#episodeGrid").innerHTML = html;
@@ -252,6 +262,13 @@ function selectShows(id) {
       }
   });
 }
+
+
+function seeAllShows(){
+listShowDetailsOnPage();
+}
+
+getElement("#btnShows").addEventListener("click", seeAllShows)
 
 function loadContent() {
   loadEpisodeList();

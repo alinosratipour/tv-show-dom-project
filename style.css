@@ -7,38 +7,11 @@
 body {
     background-color: darkorange;
 }
-/* .box {
-  width: 80%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
-  padding-top: 20px;
-} */
 
-/* .movieCard {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
-  padding: 0px 0 40px 0;
-  text-align: center;
-
-  
-} */
-
-/* .rootShow {
-  background-color: crimson;
-} */
-/* .hideEpisodeCard {
-  display: none;
-} */
-
-.showImage{
+/* .showImage{
   width: 200px;
   height:200px;
-}
+} */
 
 .movieTitle {
   text-align: center;
@@ -95,6 +68,27 @@ body {
   background-color: rgb(109, 2, 2);
   padding: 25px;
   margin: 0 auto;
+  flex-wrap: wrap;
+
+}
+
+@media screen and (max-width: 768px) {
+  .showsList {
+    flex-direction: column; 
+    width: 80%;
+    align-items: center;
+  }
+  .showSummary{
+   margin-top: 10px;
+   margin-bottom: 10px; 
+  }
+  .showDetails{
+    flex-direction: column;
+  width: 100%;
+  }
+  .showImage{
+    width: 80%;
+  }
 }
 
 .showTitle {
@@ -107,13 +101,13 @@ body {
 
 .showSummary {
   color: rgb(175, 166, 166);
-  width: 50%;
+ flex: 2;
   padding: 20px;
   text-align: left;
 }
 
 .showDetails {
-  width: 25%;
+ flex: 1;
   border-radius: 10px;
   color: rgb(31, 25, 25);
   background-color: rgb(235, 235, 235);
@@ -241,7 +235,7 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(37, 3, 54);
+  background-color: rgb(80, 5, 8);
   color: white;
   text-align: center;
   padding: 20px 0 20px 0;
@@ -249,4 +243,22 @@ body {
 .footer a {
   text-decoration: none;
   color: red;
+}
+
+
+#btnShows{
+  background-color: orangered;
+  padding: 15px;
+  margin-bottom: 10px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+
+}
+
+.btnHidden{
+  display: none;
+}
+.btnShow{
+  display: block;
 }
