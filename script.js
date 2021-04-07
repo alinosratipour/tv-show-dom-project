@@ -265,4 +265,6 @@ function loadContent() {
   listShowDetailsOnPage();
 }
 
+
+
 window.onload = loadContent;
