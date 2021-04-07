@@ -259,12 +259,12 @@ function seeAllShows() {
 
 getElement("#btnShows").addEventListener("click", seeAllShows);
 
-function loadContent() {
-  // loadEpisodeList();
+// function loadContent() {
+//   // loadEpisodeList();
+  
+// }
+
   populateShowsMenu();
   listShowDetailsOnPage();
-}
 
-
-
-window.onload = loadContent;
+//window.onload = loadContent;
