@@ -257,7 +257,7 @@ function seeAllShows() {
   listShowDetailsOnPage();
 }
 
-getElement("#btnShows").addEventListener("click", seeAllShows);
+//getElement("#btnShows").addEventListener("click", seeAllShows);
 
 // function loadContent() {
 //   // loadEpisodeList();
