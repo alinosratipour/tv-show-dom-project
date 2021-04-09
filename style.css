@@ -1,3 +1,258 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: darkorange;
+}
+
+/* .showImage{
+  width: 200px;
+  height:200px;
+} */
+
+.movieTitle {
+  text-align: center;
+  border: 1px solid black;
+  padding: 10px;
+  color: #000;
+  border-radius: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.9rem;
+}
+
+.summary {
+  padding: 15px;
+  color: rgb(128, 125, 125);
+  text-align: left;
+}
+.img {
+  padding-top: 30px;
+}
+
 #root {
+  background-color: darkorange;
+}
+
+#episodeGrid {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+  padding-top: 20px;
+}
+
+.episodeCard {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px -1px 6px 1px rgba(0, 0, 0, 0.75);
+  padding: 0px 0 40px 0;
+  text-align: center;
+}
+
+.showsList {
+  display: flex;
+  box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -webkit-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  width: 90%;
+  background-color: rgb(109, 2, 2);
+  padding: 25px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+  .showsList {
+    flex-direction: column;
+    width: 80%;
+    align-items: center;
+  }
+  .showSummary {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .showDetails {
+    flex-direction: column;
+    width: 100%;
+  }
+  .showImage {
+    width: 80%;
+  }
+}
+
+.showTitle {
+  margin-left: 70px;
+  cursor: pointer;
+  font-size: 1.8em;
+}
+
+#truncateLink {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: orangered;
+  font-size: 1rem;
+  color: white;
+}
+
+.showSummary {
+  color: rgb(175, 166, 166);
+  flex: 2;
+  padding: 20px;
+  text-align: left;
+}
+
+.showDetails {
+  flex: 1;
+  border-radius: 10px;
+  color: rgb(31, 25, 25);
+  background-color: rgb(235, 235, 235);
+  margin: 0 auto;
+  box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -webkit-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 7px 6px 16px -2px rgba(0, 0, 0, 0.66);
+  padding-left: 30px;
+}
+
+.showDetailsItems {
+  list-style: none;
+  padding-top: 40px;
+  font-weight: 800;
+  color: rgb(90, 87, 87);
+}
+.hideEpisodeMenu {
+  display: none;
+}
+/*
+.showEpisodeMenu {
+  display: block;
+} */
+
+.header {
+  background-color: rgb(80, 5, 8);
+  padding-top: 80px;
+
+  padding-bottom: 20px;
+  border-bottom: 2px solid white;
+}
+.hideSearchBar {
+  display: none;
+}
+.showSearchBar {
+  display: block;
+}
+#episodeSearch {
+  border: none;
+  padding: 10px;
+  width: 60%;
+  outline: none;
+  border-radius: 10px;
+}
+
+#showsSearch {
+  border: none;
+  padding: 10px;
+  width: 60%;
+  outline: none;
+  border-radius: 10px;
+}
+
+.searchContainer {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+}
+.searchBarContainer {
+  flex: 2;
+  background-color: darkorange;
+  margin-left: 100px;
+}
+.dropDownContainer {
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.countEpisodeResult {
+  font-size: 1rem;
+  color: rgb(152, 156, 160);
+  padding: 0 15px 0 15px;
+}
+.countAllEpisode {
+  font-size: 1rem;
+  color: rgb(152, 156, 160);
+}
+
+.dropDown {
+  padding: 8px 12px;
+  color: #333333;
+  background-color: #eeeeee;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+#episode {
+  padding: 8px 12px;
+  color: #333333;
+  background-color: #eeeeee;
+  border: 1px solid #dddddd;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.dropDown:focus,
+.dropDown:hover {
+  outline: none;
+  border: 1px solid #bbbbbb;
+}
+
+.dropDown option {
+  background-color: #fff;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(80, 5, 8);
+  color: white;
+  text-align: center;
+  padding: 20px 0 20px 0;
+}
+.footer a {
+  text-decoration: none;
   color: red;
+}
+
+#btnShows {
+  background-color: orangered;
+  padding: 15px;
+  margin-bottom: 10px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.btnHidden {
+  display: none;
+}
+.btnShow {
+  display: block;
 }

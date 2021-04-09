@@ -3,19 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | My Name (My GitHub username)</title>
+    <title>TV Show Project | Ali NosratiPour (alinosratipour)</title>
     <link href="style.css" rel="stylesheet" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    
+    <!-- <link rel="icon" href="/favicon.ico" type="image/x-icon" /> -->
+    
   </head>
 
   <body>
-    <div id="root">
-    </div>
+    
+    <header class="header">
+    
+       <div class="dropDownContainer">
+         <a id="btnShows"  href="">SeeAllShows</a>
+         <select name= "shows" id="shows"   class="dropDown"></select>
+         <select name="episode" id="episode" class="dropDown"></select>   
+         <input type="text" id="showsSearch" class="showsSearch">
+         <input type="text" id="episodeSearch" class="episodeSearch">      
+      </div>
 
+       <div class="searchBarContainer">
+        
+       </div>
+             
+      <div class="searchContainer">    
+          <p class="countEpisodeResult"></p>
+          <p class="countAllEpisode"></p> 
+       </div> 
+
+    </header>  
+    
+       <div id="root" ></div> 
+    <div id="episodeGrid"></div>
+ 
+    
+    
+    
+<footer class="footer">
+  <p>
+      Data on this page is come from
+      <a href="http://www.TVMaze.com">TVMaze.com</a> and is for educational
+      purposes only
+    </p>
+</footer>
+    
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <script src="episodes.js"></script>
-
+  
+   <script src="shows.js"></script>
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
+  
   </body>
+  
 </html>
