@@ -10,30 +10,22 @@ async function getData(getId = 82) {
     console.log(error);
   }
 }
-
-function truncateString(str, num) {
-  if (str.length > num) {
-    let subStr = str.substring(0, num);
-    return subStr + "...";
-  } else {
-    return str;
-  }
+//make selection of either class or id
+function getElement(param) {
+  return document.querySelector(param);
 }
 
-function test(){
-  alert("test");
-}
 // Displaying All Shows on the page
 function listShowDetailsOnPage(listShow, isAllShows = true) {
   getElement("#episode").className = "hideEpisodeMenu";
   getElement("#episodeSearch").className = "hideSearchBar";
   getElement("#btnShows").className = "btnHidden";
-    if (isAllShows == true) listShow = listAllShows;
-    let html = "";
-    listShow.forEach((show) => {
+  if (isAllShows == true) listShow = listAllShows;
+  let html = "";
+ 
+  listShow.forEach((show) => {
     const { id, name, genres, status, runtime, summary, image } = show;
-   // let truncate = truncateString(summary, 150);
-
+    
     const SHOW_ID = id;
     if (image !== null) {
       const {
@@ -42,29 +34,26 @@ function listShowDetailsOnPage(listShow, isAllShows = true) {
       } = show;
 
       html += `
-<a onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>      
-        <div class="showsList" >                             
+
+     <a onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>      
+        <div  class="showsList" >                             
           <img alt="tvShows" class="showImage" src= ${medium} />
-          <div class="showSummary">${summary}<button onclick= test()   id="more">read more</button></div>
-          <ul  class="showDetails"> 
-              <li class="showDetailsItems">Rated: ${average}</li>
-              <li class="showDetailsItems"> Generes: ${genres}</li>
-              <li class="showDetailsItems"  >Status: ${status}</li>
-              <li class="showDetailsItems" >Runtime: ${runtime}</li>
-          </ul>              
+          <div  class="showSummary">${summary}</div>
+             <ul  class="showDetails"> 
+                <li class="showDetailsItems">Rated: ${average}</li>
+                <li class="showDetailsItems"> Generes: ${genres}</li>
+                <li class="showDetailsItems"  >Status: ${status}</li>
+                <li class="showDetailsItems" >Runtime: ${runtime}</li>
+             </ul>              
         </div>`;
     }
   });
 
   getElement("#root").innerHTML = html;
+
   getElement(
     ".countEpisodeResult"
   ).innerText = ` Displaying ${listShow.length} of ${listAllShows.length} shows`;
-}
-
-//make selection of either class or id
-function getElement(param) {
-  return document.querySelector(param);
 }
 
 // loads all the Episodes to the page
@@ -77,7 +66,7 @@ async function makePageForEpisodes(listEpisodes, isAllEpisodes = true) {
   let html = "";
   listEpisodes.forEach((episode) => {
     const { name, season, number, image, summary } = episode;
-    //let truncate = truncateString(summary, 150);
+
     if (image !== null) {
       const {
         image: { medium },
@@ -154,22 +143,20 @@ async function episodeSearchResult(e) {
 getElement("#episodeSearch").addEventListener("keyup", episodeSearchResult);
 
 function filteredShows(e) {
-  let result = e.target.value.toLowerCase();
-  const filtered = listAllShows.filter((show) => {
+    let result = e.target.value.toLowerCase();
+    const filtered = listAllShows.filter((show) => {
     const { name, summary, genres } = show;
     if (name !== null && summary !== null && genres !== null) {
       return (
         name.toLowerCase().includes(result) ||
-        summary.toLowerCase().includes(result) || 
-        genres.join(',').toLowerCase().includes(result)
+        summary.toLowerCase().includes(result) ||
+        genres.join(",").toLowerCase().includes(result)
       );
     }
   });
   listShowDetailsOnPage(filtered, false);
 }
 getElement("#showsSearch").addEventListener("keyup", filteredShows);
-
-
 
 //populate select menu dropDownShow 82 is the default show selection
 async function populateShowsMenu(id = 82) {
@@ -191,8 +178,6 @@ async function populateShowsMenu(id = 82) {
   getElement("#shows").innerHTML = selectDefault + menu;
 }
 getElement("#shows").addEventListener("change", selectShows);
-
-
 
 //render on the page and populate episode drop down based on show selection.
 async function getShowsEpisodes(id) {
@@ -244,7 +229,6 @@ async function getShowsEpisodes(id) {
     ".countEpisodeResult"
   ).innerText = ` Displaying ${movie.length}  episodes  `;
 }
-
 
 // function to populate Episode menu based on show selection
 function selectShows(id) {
