@@ -11,7 +11,7 @@ async function getData(showId = 82) {
 }
 
 async function getShowsCast(getId) {
-  const castUrl = `http://api.tvmaze.com/shows/${getId}?embed=cast`;
+  const castUrl = `https://api.tvmaze.com/shows/${getId}?embed=cast`;
   try {
     let resolve = await fetch(castUrl);
     let data = await resolve.json();
