@@ -17,14 +17,17 @@
        <div class="dropDownContainer">
          <a id="btnShows"  href="">SeeAllShows</a>
          <select name= "shows" id="shows"   class="dropDown"></select>
-         <select name="episode" id="episode" class="dropDown"></select>   
+         <select name="episode" id="episode" class="dropDown"></select>
+         <select name="rating" id="rating" class="dropDown">
+               <option value="NON">Sort By:</option>
+                <option value="TopRated">TopRated</option>
+                <option value="LowRated">LowRared</option>
+         </select>    
          <input type="text" id="showsSearch" class="showsSearch">
          <input type="text" id="episodeSearch" class="episodeSearch">      
       </div>
 
-       <div class="searchBarContainer">
-        
-       </div>
+    
              
       <div class="searchContainer">    
           <p class="countEpisodeResult"></p>
@@ -34,7 +37,8 @@
     </header>  
     
        <div id="root" ></div> 
-    <div id="episodeGrid"></div>
+  <div class="castContainer"></div>
+        <div id="episodeGrid"></div>
  
     
     

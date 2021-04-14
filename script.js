@@ -1,15 +1,28 @@
 const listAllShows = getAllShows();
-async function getData(getId = 82) {
-  let url = `https://api.tvmaze.com/shows/${getId}/episodes`;
+async function getData(showId = 82) {
+  let url = `https://api.tvmaze.com/shows/${showId}/episodes`;
   try {
     let resolve = await fetch(url);
     let data = await resolve.json();
-
     return data;
   } catch (error) {
     console.log(error);
   }
 }
+
+async function getShowsCast(getId) {
+  const castUrl = `http://api.tvmaze.com/shows/${getId}?embed=cast`;
+  try {
+    let resolve = await fetch(castUrl);
+    let data = await resolve.json();
+
+    //return console.log(data);
+    return data._embedded.cast;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //make selection of either class or id
 function getElement(param) {
   return document.querySelector(param);
@@ -20,21 +33,17 @@ function listShowDetailsOnPage(listShow, isAllShows = true) {
   getElement("#episode").className = "hideEpisodeMenu";
   getElement("#episodeSearch").className = "hideSearchBar";
   getElement("#btnShows").className = "btnHidden";
-  if (isAllShows == true) listShow = listAllShows;
   let html = "";
- 
+  if (isAllShows == true) listShow = listAllShows;
   listShow.forEach((show) => {
     const { id, name, genres, status, runtime, summary, image } = show;
-    
     const SHOW_ID = id;
     if (image !== null) {
       const {
         image: { medium },
         rating: { average },
       } = show;
-
       html += `
-
      <a onclick= getShowsEpisodes(${SHOW_ID})  class ="showTitle">${name} </a>      
         <div  class="showsList" >                             
           <img alt="tvShows" class="showImage" src= ${medium} />
@@ -50,50 +59,36 @@ function listShowDetailsOnPage(listShow, isAllShows = true) {
   });
 
   getElement("#root").innerHTML = html;
-
   getElement(
     ".countEpisodeResult"
-  ).innerText = ` Displaying ${listShow.length} of ${listAllShows.length} shows`;
+  ).innerText = `Displaying ${listShow.length} of ${listAllShows.length} shows`;
 }
 
 // loads all the Episodes to the page
 async function makePageForEpisodes(listEpisodes, isAllEpisodes = true) {
-  if (isAllEpisodes == true) listEpisodes = await getData();
-  let id = getElement("#shows").options[getElement("#shows").selectedIndex]
-    .value;
-
-  wholeMovies = await getData(id);
   let html = "";
+  let ShowId = getElement("#shows").options[getElement("#shows").selectedIndex]
+    .value;
+  let wholeMovies = await getData(ShowId);
+  if (isAllEpisodes == true) listEpisodes = await getData();
   listEpisodes.forEach((episode) => {
     const { name, season, number, image, summary } = episode;
-
+    let img = "img.png";
     if (image !== null) {
       const {
         image: { medium },
       } = episode;
-      html += ` 
-             
-          <div class="episodeCard">
-              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
-              <img class="img" src= ${medium} />
-              <div class="summary">${summary}</div>
-        </div>`;
-    } else {
-      html += `
-      <div class="episodeCard">
-              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
-              <img class="img" src= "./img.png" />
-              <div class="summary">${summary}</div>
-        </div>`;
+      img = medium;
     }
+
+    html += makeEpisodeCards(name, season, number, img, summary);
   });
 
   getElement("#episodeGrid").innerHTML = html;
-
   if (isAllEpisodes == true) {
     getElement(
       ".countEpisodeResult"
-    ).innerText = ` Displaying ${wholeMovies.length} episodes  `;
+    ).innerText = `Displaying ${wholeMovies.length} episodes  `;
   } else {
     getElement(
       ".countEpisodeResult"
@@ -101,6 +96,17 @@ async function makePageForEpisodes(listEpisodes, isAllEpisodes = true) {
   }
 }
 
+function makeEpisodeCards(name, season, number, img, summary) {
+  let html = `              
+          <div class="episodeCard">
+              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
+              <img class="img" src= ${img} />
+              <div class="summary">${summary}</div>
+          </div>`;
+  return html;
+}
+
+//Select Individual Episode
 async function filteredEpisode() {
   const option = getElement("#episode").options[
     getElement("#episode").selectedIndex
@@ -114,19 +120,16 @@ async function filteredEpisode() {
   let movie = await getData(movieId);
   const filtered = movie.filter((episode) => episode.id == episodeId);
   makePageForEpisodes(filtered, false);
-
   if (option === episodeId) {
     selectShows();
   }
 }
-
-//Select Individual Episode
 getElement("#episode").addEventListener("change", filteredEpisode);
 
-async function episodeSearchResult(e) {
+// search for the episodes
+async function searchInEpisodes(e) {
   let id = getElement("#shows").options[getElement("#shows").selectedIndex]
     .value;
-
   let movie = await getData(id);
   let result = e.target.value.toLowerCase();
   const filtered = movie.filter((item) => {
@@ -140,11 +143,11 @@ async function episodeSearchResult(e) {
   makePageForEpisodes(filtered, false);
 }
 
-getElement("#episodeSearch").addEventListener("keyup", episodeSearchResult);
+getElement("#episodeSearch").addEventListener("keyup", searchInEpisodes);
 
-function filteredShows(e) {
-    let result = e.target.value.toLowerCase();
-    const filtered = listAllShows.filter((show) => {
+function searchInShows(e) {
+  let result = e.target.value.toLowerCase();
+  const filtered = listAllShows.filter((show) => {
     const { name, summary, genres } = show;
     if (name !== null && summary !== null && genres !== null) {
       return (
@@ -156,10 +159,10 @@ function filteredShows(e) {
   });
   listShowDetailsOnPage(filtered, false);
 }
-getElement("#showsSearch").addEventListener("keyup", filteredShows);
+getElement("#showsSearch").addEventListener("keyup", searchInShows);
 
 //populate select menu dropDownShow 82 is the default show selection
-async function populateShowsMenu(id = 82) {
+function populateShowsMenu(id = 82) {
   let menu = "";
   let selectDefault = "";
   // sort the shows names on alphabetical order
@@ -179,59 +182,86 @@ async function populateShowsMenu(id = 82) {
 }
 getElement("#shows").addEventListener("change", selectShows);
 
+// filter show rating based on user selection
+function sortRating() {
+  let option = getElement("#rating").options[
+    getElement("#rating").selectedIndex
+  ].value;
+  const filterRating = listAllShows.sort(function (a, b) {
+    if (option == "TopRated") {
+      return b.rating.average - a.rating.average;
+    } else {
+      return a.rating.average - b.rating.average;
+    }
+  });
+  listShowDetailsOnPage(filterRating, true);
+}
+getElement("#rating").addEventListener("change", sortRating);
+
+//Show All casts on the page
+async function getCasts(id) {
+  let casts = await getShowsCast(id);
+  let html = "";
+  casts.forEach((cast) => {
+    const {
+      person: { name },
+    } = cast;
+    let img = "img.png";
+    if (cast.character.image !== null) {
+      img = cast.character.image.medium;
+    }
+    html += `<div class="castList">
+            <div class="castCard">
+                <img alt="cast" class="castImg" src= ${img} />
+                <a href="#" class="personLink">${name}</a> 
+                <p class="character">As:  ${cast.character.name}</p>
+            </div>
+           </div>`;
+  });
+  getElement(".castContainer").innerHTML = html;
+}
+
 //render on the page and populate episode drop down based on show selection.
-async function getShowsEpisodes(id) {
+async function getShowsEpisodes(showId) {
   getElement("#showsSearch").className = "hideSearchBar";
+  getElement("#rating").className = "hideSearchBar";
   getElement("#episodeSearch").className = "showSearchBar";
   getElement("#btnShows").className = "btnShow";
-  populateShowsMenu(id);
+  populateShowsMenu(showId);
   getElement("#episode").className = "showEpisodeMenu";
+  getCasts(showId);
 
   let html = "";
   let showMenu = "";
-  let movie = await getData(id);
+  let movie = await getData(showId);
   showMenu += `<option  selected="selected">SelectAll</option>`;
   movie.forEach((episode) => {
+    let img = "img.png";
     const { name, season, number, summary, image } = episode;
     if (image !== null) {
       const {
         image: { medium },
       } = episode;
-      const episodeNumber = `${number > 9 ? number : "0" + number}`;
-      const episodeSeason = `${season > 9 ? season : "0" + season}`;
-      html += `        
-      <div class="episodeCard">
-          <h3 class="movieTitle">${name} - S0${episodeSeason}E${episodeNumber}</h3>
-          <img class="img" src= ${medium} />
-          <div class="summary">${summary}</div>             
-      </div>`;
-
-      showMenu += ` <option value=${episode.id + "+" + id}>
-          S${episodeSeason}E${episodeNumber} -${name} </option>`;
-      getElement("#episode").innerHTML = showMenu;
-    } else {
-      html += ` 
-             
-          <div class="episodeCard">
-              <h3 class="movieTitle">${name} - S0${season}E0${number}</h3>
-              <img class="img" src= "./img.png" />
-              <div class="summary">${summary}</div>
-        </div>`;
-      showMenu += ` <option value=${episode.id + "+" + id}>
-                S0${season}E0${number} -${name} </option>`;
-      getElement("#episode").innerHTML = showMenu;
+      img = medium;
     }
+    const episodeNumber = `${number > 9 ? number : "0" + number}`;
+    const episodeSeason = `${season > 9 ? season : "0" + season}`;
+    html += makeEpisodeCards(name, season, number, img, summary);
+
+    showMenu += ` <option value=${episode.id + "+" + showId}>
+          S${episodeSeason}E${episodeNumber} -${name} </option>`;
+    getElement("#episode").innerHTML = showMenu;
   });
 
   getElement("#episodeGrid").innerHTML = html;
   getElement("#root").innerHTML = "";
   getElement(
     ".countEpisodeResult"
-  ).innerText = ` Displaying ${movie.length}  episodes  `;
+  ).innerText = ` Displaying ${movie.length}  episodes`;
 }
 
 // function to populate Episode menu based on show selection
-function selectShows(id) {
+function selectShows() {
   const option = getElement("#shows").options[
     getElement("#shows").selectedIndex
   ].value;

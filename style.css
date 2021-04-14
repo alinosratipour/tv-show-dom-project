@@ -12,7 +12,39 @@ body {
   width: 200px;
   height:200px;
 } */
+.castContainer {
+ overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  text-align: center;
+ background-color: rgb(247, 223, 11);
+}
 
+
+.castList {
+ display: inline-block;
+  margin: 0 auto;
+  
+}
+.character{
+  word-wrap: break-word;
+}
+.personLink{
+  text-decoration: none;
+
+}
+.castImg {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.castCard{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+ 
+}
 .movieTitle {
   text-align: center;
   border: 1px solid black;
@@ -90,6 +122,8 @@ body {
   margin-left: 70px;
   cursor: pointer;
   font-size: 1.8em;
+  color: #fff;
+ 
 }
 
 #truncateLink {
